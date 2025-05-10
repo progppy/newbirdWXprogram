@@ -1,0 +1,46 @@
+<!-- pages/timetable/timetable.wxml -->
+<view class="container">
+  <!-- 周数控制栏 -->
+  <view class="week-control">
+    <button bindtap="prevWeek" size = "mini">← 上周</button>
+    <text>第{{currentWeek}}周</text>
+    <button bindtap="nextWeek" size = "mini">下周 →</button>
+  </view>
+
+  <!-- 周历主体 -->
+  <view class="week-container">
+    <view 
+      wx:for="{{weekData}}"
+      wx:key="weekday"
+      class="day-column"
+      wx:for-item = "dayView"
+    >
+      <!-- 每天栏目 -->
+      <view class="day-header">
+        <text>{{dayView.weekday}}</text>
+        <text>{{dayView.date}}</text>
+      </view>
+
+      <!-- 具体到每节课块 -->
+      <view class="course-list"> 
+        <view 
+          wx:for="{{dayView.courses}}"
+          wx:for-item= "classView"
+          wx:key="time+name+classroom"
+          class="course-card"
+          bindtap="showCourseDetail"
+          data-course="{{classView}}"
+        >
+          <text class="course-name">{{classView.name}}</text>
+          <text class="course-time">{{classView.time}}</text>
+          <text class="course-room">{{classView.classroom}}</text>
+        </view>
+
+        <!-- 无课程提示 -->
+        <view wx:if="{{dayView.courses.length === 0}}" class="no-course">
+          今天没有课程哦~
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
